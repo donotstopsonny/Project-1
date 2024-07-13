@@ -10,18 +10,25 @@ import UIKit
 class DetailViewController: UIViewController {
     @IBOutlet var imageView: UIImageView!
     var selectedImage: String?
-    
+    var position: (position: Int, total: Int)?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        title = selectedImage
+        
+        guard let selectedImage = selectedImage else {
+            print("No image provided")
+            return
+        }
+        
+        guard let position = position else {
+            print("No position provider")
+            return
+        }
+        
+        title = selectedImage + " - \(position.position)/\(position.total)"
         navigationItem.largeTitleDisplayMode = .never
         navigationController?.navigationBar.prefersLargeTitles = true
-        
-        if let imageToLoad = selectedImage {
-            imageView.image = UIImage(named: imageToLoad)
-        }
+        imageView.image = UIImage(named: selectedImage)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -33,14 +40,5 @@ class DetailViewController: UIViewController {
         super.viewWillDisappear(animated)
         navigationController?.hidesBarsOnTap = false
     }
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
