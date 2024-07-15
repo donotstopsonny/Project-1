@@ -25,6 +25,8 @@ class ViewController: UITableViewController {
             }
         }
         pictures.sort(by: {$0 < $1})
+        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(shareTapped))
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -46,6 +48,19 @@ class ViewController: UITableViewController {
             
             navigationController?.pushViewController(vc, animated: true)
         }
+    }
+    
+    @objc func shareTapped(){
+        let appLink = "https://apps.apple.com/us/app/facebook/id284882215"
+        let textToShare = "Share this app with your friends!"
+        
+        let shareItems: [Any] = [
+            appLink, textToShare
+        ]
+        
+        let vc = UIActivityViewController(activityItems: shareItems, applicationActivities: [])
+        vc.popoverPresentationController?.barButtonItem = navigationItem.rightBarButtonItem
+        present(vc, animated: true)
     }
 }
 
